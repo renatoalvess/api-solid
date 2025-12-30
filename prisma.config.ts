@@ -9,6 +9,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"] as string,
+    url: process.env["DATABASE_URL"] ?? "postgresql://docker:docker@localhost:5432/apisolid?schema=public",
   },
 });

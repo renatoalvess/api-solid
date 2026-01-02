@@ -12,7 +12,10 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "prisma:generate": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +25,8 @@
     "@types/bcryptjs": "2.4.6",
     "@types/node": "25.0.3",
     "@types/pg": "8.16.0",
+    "@vitest/coverage-v8": "4.0.16",
+    "@vitest/ui": "4.0.16",
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
     "globals": "16.5.0",

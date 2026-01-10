@@ -1,24 +1,17 @@
+import { makeGetUserProfileUseCase } from '@/use-cases/factories/make-get-user-profile-use-case'
 import type { FastifyRequest, FastifyReply } from 'fastify'
 
-export async function profile(
-  request: FastifyRequest,
-  reply: FastifyReply,
-) {
+export async function profile(request: FastifyRequest, reply: FastifyReply) {
+  const getUserProfile = makeGetUserProfileUseCase()
 
-//   try {
-//     const authenticateUseCase = makeAuthenticateUseCase()
+  const { user } = await getUserProfile.execute({
+    userId: request.user.sub,
+  })
 
-//     await authenticateUseCase.execute({
-//       email,
-//       password,
-//     })
-//   } catch (error) {
-//     if (error instanceof InvalidCredentialsError) {
-//       return reply.status(400).send({ message: error.message })
-//     }
-
-//     throw error
-//   }
-
-  return reply.status(200).send()
+  return reply.status(200).send({
+    user: {
+      ...user,
+      password_hash: undefined,
+    },
+  })
 }

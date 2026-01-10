@@ -1,9 +1,14 @@
 import fastify from 'fastify'
 import { appRoutes } from './http/routes'
 import { ZodError } from 'zod'
-import { env } from 'node:process'
+import { env } from './env'
+import fastifyJwt from '@fastify/jwt'
 
 export const app = fastify()
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET_KEY,
+})
 
 app.register(appRoutes)
 
@@ -15,7 +20,7 @@ app.setErrorHandler((error, _, reply) => {
     })
   }
 
-  if (env.NODE_ENV !== 'production') {
+  if (env.NODE_ENV !== 'prod') {
     console.error(error)
   } else {
     // TODO: Here you could integrate with a logging service

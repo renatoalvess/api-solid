@@ -1,5 +1,5 @@
 import { expect, describe, it, beforeEach } from 'vitest'
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-respository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { GetUserProfileUseCase } from './get-user-profile'
 import { hash } from 'bcryptjs'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
@@ -21,7 +21,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     const { user } = await sut.execute({
-      userId: createdUser.id
+      userId: createdUser.id,
     })
 
     expect(user.name).toEqual('Renato Alves')
@@ -30,9 +30,8 @@ describe('Get User Profile Use Case', () => {
   it('should not be able to get user profile with wrong id', async () => {
     await expect(() =>
       sut.execute({
-        userId: 'non-existing-id'
+        userId: 'non-existing-id',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
-
 })

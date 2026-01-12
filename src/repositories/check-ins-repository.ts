@@ -1,4 +1,4 @@
-import type { CheckIn, Prisma } from 'generated/prisma/client'
+import { type CheckIn, Prisma } from 'generated/prisma/client'
 
 export interface CheckInsRepository {
   findById(id: string): Promise<CheckIn | null>

@@ -4,3 +4,4 @@ build
 *.log
 /generated/prisma
 coverage
+pg_data/

@@ -4,7 +4,6 @@ import { makeFetchUserCheckInsHistoryUseCase } from '@/use-cases/factories/make-
 
 export async function history(request: FastifyRequest, reply: FastifyReply) {
   const checkInHistoryQuerySchema = z.object({
-    query: z.string(),
     page: z.coerce.number().min(1).default(1),
   })
   const { page } = checkInHistoryQuerySchema.parse(request.query)

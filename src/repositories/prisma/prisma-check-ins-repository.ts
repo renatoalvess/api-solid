@@ -5,21 +5,21 @@ import dayjs from 'dayjs'
 
 export class PrismaCheckInsRepository implements CheckInsRepository {
   async findByUserIdOnDate(userId: string, date: Date) {
-    const statrtOfTheDay = dayjs(date).startOf('date').toDate()
-    const endOfTheDay = dayjs(date).endOf('date').toDate()
+  const startOfTheDay = dayjs(date).startOf('day').toDate()
+  const endOfTheDay = dayjs(date).endOf('day').toDate()
 
-    const checkIn = await prisma.checkIn.findFirst({
-      where: {
-        user_id: userId,
-        created_at: {
-          gte: statrtOfTheDay.toDateString(),
-          lte: endOfTheDay.toDateString(),
-        },
+  const checkIn = await prisma.checkIn.findFirst({
+    where: {
+      user_id: userId,
+      created_at: {
+        gte: startOfTheDay,
+        lte: endOfTheDay,
       },
-    })
+    },
+  })
 
-    return checkIn
-  }
+  return checkIn
+}
   async findManyByUserId(userId: string, page: number) {
     const checkIns = await prisma.checkIn.findMany({
       where: {

@@ -10,19 +10,25 @@ export const prisma = (() => {
     throw new Error('DATABASE_URL is not defined')
   }
 
+  // Cria URL a partir da DATABASE_URL
   const url = new URL(connectionString)
+
+  // Pega o schema (ou public)
   const schema = url.searchParams.get('schema') || 'public'
 
-  // Pool SEM ?schema (limpo)
+  // REMOVE ?schema da URL para o Pool
+  url.searchParams.delete('schema')
+
+  const cleanUrl = url.toString()
+
+  // Pool SEM schema
   const pool = new Pool({
-    connectionString: `${url.protocol}//${url.username}:${url.password}@${url.host}${url.pathname}`,
-    max: process.env.NODE_ENV === 'test' ? 1 : undefined,
+    connectionString: cleanUrl,
+    max: 5, // ✅ seguro para testes e produção
   })
 
-  // Passa schema no PrismaPg options
-  const adapter = new PrismaPg(pool, {
-    schema,
-  })
+  // Prisma recebe o schema explicitamente
+  const adapter = new PrismaPg(pool, { schema })
 
   return new PrismaClient({
     adapter,

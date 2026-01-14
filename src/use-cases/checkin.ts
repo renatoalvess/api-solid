@@ -42,7 +42,7 @@ export class CheckInUseCase {
 
     console.log('Distância calculada:', distance)
 
-    const MAX_DISTANCE_IN_KILOMETERS = 0.1
+    const MAX_DISTANCE_IN_KILOMETERS = 0.5
 
     if (distance > MAX_DISTANCE_IN_KILOMETERS) {
       throw new MaxDistanceError()

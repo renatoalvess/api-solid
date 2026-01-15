@@ -1,0 +1,23 @@
+meta {
+  name: Create Gym
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:3333/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Renato Alves",
+    "email": "renato@gmail.com",
+    "password": "123456"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

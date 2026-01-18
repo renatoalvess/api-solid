@@ -25,7 +25,7 @@ export default <Environment>{
 
     console.log(databaseUrl)
 
-    execSync('npx prisma db push --force-reset', {
+    execSync('npx prisma migrate deploy', {
       stdio: 'ignore',
     })
 

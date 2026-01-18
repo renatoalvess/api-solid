@@ -5,3 +5,4 @@ build
 /generated/prisma
 coverage
 pg_data/
+bruno-api

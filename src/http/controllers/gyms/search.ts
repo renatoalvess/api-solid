@@ -1,14 +1,10 @@
 import type { FastifyRequest, FastifyReply } from 'fastify'
-import z from 'zod'
-import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case'
 import { makeSearchGymsUseCase } from '@/use-cases/factories/make-search-gyms-use-case'
+import { searchGymsQuerySchema } from '@/http/schemas'
+import { normalizeGym } from '@/http/utils/normalize-gym'
 
 export async function search(request: FastifyRequest, reply: FastifyReply) {
-  const searchGymsQueryShema = z.object({
-    query: z.string(),
-    page: z.coerce.number().min(1).default(1),
-  })
-  const { query, page } = searchGymsQueryShema.parse(request.query)
+  const { query, page } = searchGymsQuerySchema.parse(request.query)
 
   const searchGymsUseCase = makeSearchGymsUseCase()
 
@@ -16,7 +12,10 @@ export async function search(request: FastifyRequest, reply: FastifyReply) {
     query,
     page,
   })
+
+  const normalizedGyms = gyms.map(normalizeGym)
+
   return reply.status(200).send({
-    gyms,
+    gyms: normalizedGyms,
   })
 }
